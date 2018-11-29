@@ -11,6 +11,9 @@ $view->setVariable("title", "Crear Campeonato");
     <body>
         <script>
 
+            //TO DO: Comprobar fin de inscripcion antes de inicio campeonato
+            //TO DO: Form no se desmarca al ser solo uno
+
             function compareB() {
 
                 var startDt = document.getElementById("inicio_ins").value;
@@ -65,15 +68,15 @@ $view->setVariable("title", "Crear Campeonato");
                             </select>
                             -->
                             <div class="col-auto">
-                                <input type="radio" name="masculina" value="Masculina">
+                                <input type="checkbox" name="masculina" value="Masculina">
                                 <label for="masculina">Masculina</label>
                             </div>
                             <div class="col-auto">
-                                <input type="radio" name="femenina" value="Femenina">
+                                <input type="checkbox" name="femenina" value="Femenina">
                                 <label for="femenina">Femenina</label>
                             </div>
                             <div class="col-auto">
-                                <input type="radio" name="mixta" value="Mixta">
+                                <input type="checkbox" name="mixta" value="Mixta">
                                 <label for="mixta">Mixta</label>
                             </div>
                         </div><br>
