@@ -120,4 +120,18 @@ class Categoria {
 			throw new ValidationException($errors, "user is not valid");
 		}
 	}
+        
+        public function checkIsValidForCreate() {
+		$errors = array();
+                        
+			if ($this->nivel == NULL) {
+					$errors["nivel"] = "Nivel de categoria no encontrado";
+			}
+			if ($this->tipo == NULL) {
+					$errors["tipo"] = "Tipo de categoria no encontrado";
+			}
+			if (sizeof($errors) > 0) {
+					throw new ValidationException($errors, "Creacion de categoria no valida");
+			}
+	}
 }
