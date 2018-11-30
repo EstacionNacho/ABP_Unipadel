@@ -36,11 +36,9 @@ class CampeonatoController extends BaseController {
             $this->view->render("campeonato", "index");
         }
     }
-
-    public function add() {
-        
-        function creacionCategoria($tipoCategoria, $idCampeonato, $nivel) {
-
+    
+    private function creacionCategoria($tipoCategoria, $idCampeonato, $nivel) {
+            
             $categoria = new Categoria();
 
             $categoria->setTipo($tipoCategoria);
@@ -60,6 +58,8 @@ class CampeonatoController extends BaseController {
             //$campeonatocategoria->setIdCategoria($idCategoria);
             //$this->campeonatocategoriaMapper->save($campeonatocategoria);
         }
+
+    public function add() {
         
         $campeonato = new Campeonato();
 
