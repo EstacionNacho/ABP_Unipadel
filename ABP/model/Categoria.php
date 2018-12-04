@@ -45,7 +45,9 @@ class Categoria {
 			$this->tipo = $tipo;
 	}
 
-
+        public function setMaxParticipantes($maxParticipantes) {
+		$this->maxParticipantes = $maxParticipantes;
+	}
 	/**
 	* Checks if the current user instance is valid
 	* for being registered in the database

@@ -139,6 +139,14 @@ $view->setVariable("title", "Crear Campeonato");
                             <td><?= $campeonato->getFechaFin(); ?> </td>
                             <td><?= $campeonato->getInicioInscripcion(); ?> </td>
                             <td><?= $campeonato->getFinInscripcion(); ?> </td>
+                            
+                            <td>
+
+
+        <a href="index.php?controller=campeonato&amp;action=view&amp;id=<?= $campeonato->getNombreCampeonato(); ?>">Consultar</a>
+
+      </td>
+                            
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

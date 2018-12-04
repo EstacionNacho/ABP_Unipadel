@@ -19,8 +19,8 @@ class CategoriaMapper {
   }
 
   public function save(Categoria $categoria) {
-    $stmt = $this->db->prepare("INSERT INTO Categoria(nivel, tipo) values (?,?)");
-    $stmt->execute(array($categoria->getNivel(), $categoria->getTipo()));
+    $stmt = $this->db->prepare("INSERT INTO Categoria(nivel, tipo, maxParticipantes) values (?,?,?)");
+    $stmt->execute(array($categoria->getNivel(), $categoria->getTipo(), $categoria->getMaxParticipantes()));
     return $this->db->lastInsertId();
   }
 }

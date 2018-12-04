@@ -51,7 +51,8 @@ class CampeonatoController extends BaseController {
 
             $categoria->setTipo($tipoCategoria);
             $categoria->setNivel($nivel);
-
+            $categoria->setMaxParticipantes($_POST["maxParticipantes"]);
+            
             try {
 
                 $categoria->checkIsValidForCreate();
@@ -164,7 +165,11 @@ class CampeonatoController extends BaseController {
     }
 
     public function view() {
-
+        
+        if (!isset($_REQUEST["nombreCampeonato"])) {
+			throw new Exception("Necesario un nombre de campeonato");
+		}
+        
         $nombreCampeonato = $_REQUEST["nombreCampeonato"];
 
         if ($nombreCampeonato == NULL) {
