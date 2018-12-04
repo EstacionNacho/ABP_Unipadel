@@ -106,12 +106,14 @@ $view->setVariable("title", "Crear Campeonato");
                                 </div>
                             </div>
                         </div>
-                <br>
-                <label>Reglas</label><br>
-                <textarea name="reglas" rows="3" cols="40"></textarea><br><br>
-                <input type="submit" name="submit" value="Crear campeonato">
-                </form>
-                    </div>
+                        <label>Número de participantes por categoria</label>
+                        <input type="number" name="maxParticipantes" min="4" max="12">
+                        <br><br>
+                        <label>Reglas</label><br>
+                        <textarea name="reglas" rows="3" cols="40"></textarea><br><br>
+                        <input type="submit" name="submit" value="Crear campeonato">
+                    </form>
+                </div>
             </div>
         </div>
 
