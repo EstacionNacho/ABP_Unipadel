@@ -17,5 +17,14 @@ class CampeonatoCategoriaMapper {
 		$stmt = $this->db->prepare("INSERT INTO Campeonato_Categoria(idCampeonato, idCategoria) values (?,?)");
 		$stmt->execute(array($campeonatoCategoria->getIdCampeonato(),$campeonatoCategoria->getIdCategoria()));
 	}
+        
+        public function findByCampeonatoId($idCampeonato){
+            
+        $stmt = $this->db->query("SELECT idCategoria FROM Campeonato_Categoria WHERE idCampeonato = $idCampeonato");
+	$categorias_db = $stmt->fetchall(PDO::FETCH_ASSOC);
+        var_dump($categorias_db);die;
+        return $categorias_db["idCategoria"];
+        }
+        
 	}
 

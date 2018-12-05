@@ -23,4 +23,14 @@ class CategoriaMapper {
     $stmt->execute(array($categoria->getNivel(), $categoria->getTipo(), $categoria->getMaxParticipantes()));
     return $this->db->lastInsertId();
   }
+
+    public function findById($idCategoria) {
+
+        $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria");
+        $stmt->execute();
+        $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $categoria;
+    }
+
 }

@@ -21,7 +21,7 @@ class CampeonatoController extends BaseController {
 
         $this->campeonatoMapper = new CampeonatoMapper();
         $this->categoriaMapper = new CategoriaMapper();
-        $this->campeonatoCategoriaMapper = new CampeonatoMapper();
+        $this->campeonatoCategoriaMapper = new campeonatoCategoriaMapper();
     }
 
     public function index() {
@@ -166,19 +166,25 @@ class CampeonatoController extends BaseController {
 
     public function view() {
         
-        if (!isset($_REQUEST["nombreCampeonato"])) {
-			throw new Exception("Necesario un nombre de campeonato");
-		}
-        
-        $nombreCampeonato = $_REQUEST["nombreCampeonato"];
-
-        if ($nombreCampeonato == NULL) {
-            throw new Exception("No se han realizado campeonatos");
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception("Necesario un identificador de campeonato");
         }
 
-        $campeonatos = $this->campeonatoMapper->finAll();
-        $this->view->setVariable("campeonatos", $campeonatos, false);
-        $this->view->render("campeonato", "index");
+        $idCampeonato = $_REQUEST["id"];
+
+        if ($idCampeonato == NULL) {
+            throw new Exception("No se han realizado campeonatos");
+        }
+        
+        $campeonato = $this->campeonatoMapper->findById($idCampeonato);
+        $idCategorias = $this->campeonatoCategoriaMapper->findByCampeonatoId($idCampeonato);
+        $categoria = $this->categoriaMapper->findById($idCategorias);
+        
+	$this->view->setVariable("campeonato", $campeonato, false);
+	$this->view->setVariable("categoria", $categoria, false);
+
+	$this->view->render("campeonato", "view");
+        
     }
 
 }

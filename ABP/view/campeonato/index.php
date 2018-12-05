@@ -143,7 +143,7 @@ $view->setVariable("title", "Crear Campeonato");
                             <td>
 
 
-        <a href="index.php?controller=campeonato&amp;action=view&amp;id=<?= $campeonato->getNombreCampeonato(); ?>">Consultar</a>
+        <a href="index.php?controller=campeonato&amp;action=view&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Consultar</a>
 
       </td>
                             
