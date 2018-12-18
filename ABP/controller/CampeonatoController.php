@@ -40,6 +40,50 @@ class CampeonatoController extends BaseController {
         }
     }
 
+    public function crearCampeonato() {
+            if (!isset($this->currentUser)) {
+            $this->view->render("usuarios", "login");
+        } else {
+            //if($this->currentUser->getTipo()!='admin'){
+            //$errors = array();
+            //$errors["general"] = "Usuario no valido para crear campeonatos";
+            //$this->view->setVariable("errors", $errors);
+            //$this->view->redirect("home", "index");
+            //}
+            $this->view->render("campeonato", "crearCampeonato");
+        }
+    }
+
+    public function modificarCampeonato() {
+        
+         $campeonato = new Campeonato();
+        
+        if (isset($_POST["idCampeonato"])) {
+            
+            $campeonato->setIdCampeonato($_POST["idCampeonato"]);
+            $campeonato->setNombreCampeonato($_POST["nombreCampeonato"]);
+            $campeonato->setFechaInicio($_POST["fechaInicio"]);
+            $campeonato->setFechaFin($_POST["fechaFin"]);
+            $campeonato->setInicioInscripcion($_POST["inicioInscripcion"]);
+            $campeonato->setFinInscripcion($_POST["finInscripcion"]);
+            $campeonato->setReglas($_POST["reglas"]);
+            
+            try {
+
+                $campeonato->checkIsValidForUpdate();
+                $this->campeonatoMapper->update($campeonato);
+                
+            } catch (ValidationException $ex) {
+                $errors = $ex->getErrors();
+                $this->view->setVariable("errors", $errors);
+            }
+        }
+
+        $campeonatos = $this->campeonatoMapper->findAll();
+        $this->view->setVariable("campeonatos", $campeonatos, false);
+        $this->view->render("campeonato", "index");
+    }
+
     public function add() {
 
         function creacionCategoria($idCampeonato, $tipoCategoria, $nivel) {
@@ -52,12 +96,12 @@ class CampeonatoController extends BaseController {
             $categoria->setTipo($tipoCategoria);
             $categoria->setNivel($nivel);
             $categoria->setMaxParticipantes($_POST["maxParticipantes"]);
-            
+
             try {
 
                 $categoria->checkIsValidForCreate();
                 $idCategoria = $categoriaMapper->save($categoria);
-                
+
             } catch (ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -67,10 +111,10 @@ class CampeonatoController extends BaseController {
             $campeonatoCategoria->setIdCategoria($idCategoria);
 
             try {
-                
+
                 $campeonatoCategoria->checkIsValidForCreate();
                 $campeonatoCategoriaMapper->save($campeonatoCategoria);
-                
+
             } catch (ValidationException $ex) {
                 $errors = $ex->getErrors();
                 $this->view->setVariable("errors", $errors);
@@ -114,9 +158,9 @@ class CampeonatoController extends BaseController {
                     }
                 }
                 if (isset($_POST["femenina"])) {
-                    
+
                     $tipoCategoria = $_POST["femenina"];
-                    
+
                     if (isset($_POST["nivelFEM1"])) {
 
                         $nivel = $_POST["nivelFEM1"];
@@ -134,9 +178,9 @@ class CampeonatoController extends BaseController {
                     }
                 }
                 if (isset($_POST["mixta"])) {
-                    
+
                     $tipoCategoria = $_POST["mixta"];
-                    
+
                     if (isset($_POST["nivelMIX1"])) {
 
                         $nivel = $_POST["nivelMIX1"];
@@ -165,7 +209,7 @@ class CampeonatoController extends BaseController {
     }
 
     public function view() {
-        
+
         if (!isset($_REQUEST["id"])) {
             throw new Exception("Necesario un identificador de campeonato");
         }
@@ -175,16 +219,53 @@ class CampeonatoController extends BaseController {
         if ($idCampeonato == NULL) {
             throw new Exception("No se han realizado campeonatos");
         }
-        
+
         $campeonato = $this->campeonatoMapper->findById($idCampeonato);
         $idCategorias = $this->campeonatoCategoriaMapper->findByCampeonatoId($idCampeonato);
-        $categoria = $this->categoriaMapper->findById($idCategorias);
-        
+        $categorias = $this->categoriaMapper->findById($idCategorias);
+
 	$this->view->setVariable("campeonato", $campeonato, false);
-	$this->view->setVariable("categoria", $categoria, false);
+	$this->view->setVariable("categorias", $categorias, false);
 
 	$this->view->render("campeonato", "view");
-        
+
     }
+
+     public function modificar() {
+
+         if (!isset($_REQUEST["id"])) {
+            throw new Exception("Necesario un identificador de campeonato");
+        }
+
+        $idCampeonato = $_REQUEST["id"];
+
+        if ($idCampeonato == NULL) {
+            throw new Exception("No se han realizado campeonatos");
+        }
+
+        $campeonato = $this->campeonatoMapper->findById($idCampeonato);
+        $this->view->setVariable("campeonato", $campeonato, false);
+
+        $this->view->render("campeonato", "modificar");
+     }
+     
+     public function eliminar() {
+
+         if (!isset($_REQUEST["id"])) {
+            throw new Exception("Necesario un identificador de campeonato");
+        }
+
+        $idCampeonato = $_REQUEST["id"];
+
+        if ($idCampeonato == NULL) {
+            throw new Exception("No se han realizado campeonatos");
+        }
+        
+        $this->campeonatoMapper->delete($idCampeonato);
+        
+        $campeonatos = $this->campeonatoMapper->findAll();
+        $this->view->setVariable("campeonatos", $campeonatos, false);
+        $this->view->render("campeonato", "index");
+     }
 
 }

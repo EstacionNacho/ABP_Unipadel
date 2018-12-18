@@ -24,11 +24,16 @@ class CategoriaMapper {
     return $this->db->lastInsertId();
   }
 
-    public function findById($idCategoria) {
+    public function findById($idCategorias) {
+        
+        $categoria = NULL;
+        
+        foreach ($idCategorias as $idCategoria) {
 
-        $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria");
-        $stmt->execute();
-        $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[idCategoria]");
+            $stmt->execute();
+            $categoria[$idCategoria["idCategoria"]] = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
 
         return $categoria;
     }

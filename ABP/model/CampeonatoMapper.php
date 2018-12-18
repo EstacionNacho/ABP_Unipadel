@@ -42,5 +42,19 @@ class CampeonatoMapper {
         $stmt->execute(array($campeonato->getNombreCampeonato(), $campeonato->getFechaInicio(), $campeonato->getFechaFin(), $campeonato->getInicioInscripcion(), $campeonato->getFinInscripcion(), $campeonato->getReglas()));
         return $this->db->lastInsertId();
     }
+    
+    public function update(Campeonato $campeonato){
+        
+        $idCampeonato = $campeonato->getIdCampeonato();
+
+        $stmt = $this->db->prepare("UPDATE Campeonato SET nombre = ?,fechaInicio = ?,fechaFin = ?,inicioInscripcion = ?,finInscripcion = ?,reglas = ? WHERE idCampeonato=$idCampeonato");
+        $stmt->execute(array($campeonato->getNombreCampeonato(), $campeonato->getFechaInicio(), $campeonato->getFechaFin(), $campeonato->getInicioInscripcion(), $campeonato->getFinInscripcion(), $campeonato->getReglas()));
+    }
+    
+    public function delete($idCampeonato){ 
+        
+        $stmt = $this->db->prepare("DELETE FROM Campeonato WHERE idCampeonato = $idCampeonato");
+        $stmt->execute();
+    }
 
 }
