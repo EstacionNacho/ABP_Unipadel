@@ -2,7 +2,7 @@
 require_once(__DIR__ . "/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
-$partidos = $view->getVariable("partido");
+$partidos = $view->getVariable("partidos");
 $view->setVariable("title", "Crear Partido");
 ?>
 
@@ -29,12 +29,13 @@ $view->setVariable("title", "Crear Partido");
                 <div class="col-sm-4">
                     <h3>Promocionar Partido</h3>
                     <form name="crearpartido" action="index.php?controller=Partido&amp;action=add" method="POST">
-                        <label>Fecha inicio</label>
+                        <label>Fecha</label>
                         <input type="date" name="fecha" value="" required/><br>
-                        <label>Hora de inicio</label>
+                        <!-- <label>Hora de inicio</label>
                         <input type="time" name="horaInicio" value="" required/><br>
                         <label>Hora de finalización</label>
                         <input type="time" name="horaFin" value="" required/><br>
+                        -->
                         <label>Fecha inicio inscripciones</label>
                         <input type="date" name="inicioInscripcion" value="" id="inicio_ins" required/><br>
                         <label>Fecha fin inscripciones</label>
@@ -43,6 +44,46 @@ $view->setVariable("title", "Crear Partido");
                     </form>
                 </div>
             </div>
+        </div>
+                <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($partidos as $partido): ?>
+                        <tr>
+                            <td><?= $partido->getIdPartido(); ?> </td>
+                            <td><?= $partido->getFecha(); ?> </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </main>
+    </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($partidos as $partido): ?>
+                        <tr>
+                            <td><?= $partido->getIdPartido(); ?> </td>
+                            <td><?= $partido->getFecha(); ?> </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
             <footer>
                 <p>ABP_23</p>
             </footer>

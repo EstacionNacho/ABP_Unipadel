@@ -10,7 +10,6 @@ $view->setVariable("title", "Crear Campeonato");
 
 <html lang="es">
     <body>
-        <?php var_dump($gruposCampeonatos[0]->getCampeonato()->getIdCampeonato()); ?>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -51,7 +50,6 @@ $view->setVariable("title", "Crear Campeonato");
             </table>
         </main>
     </div>
-</div>
 
 <footer>
     <p>ABP_23</p>
