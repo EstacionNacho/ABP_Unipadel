@@ -194,7 +194,7 @@ $currentype = $view->getVariable("currenttype");
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="index.php?controller=campeonato&amp;action=index">Campeonatos</a>
-						<a class="dropdown-item" href="index.php?controller=campeonato&amp;action=index">Crear campeonato</a>
+						<a class="dropdown-item" href="index.php?controller=campeonato&amp;action=crearCampeonato">Crear campeonato</a>
 						<a class="dropdown-item" href="index.php?controller=enfrentamiento&amp;action=index">Enfrentamientos</a>
 					</div>
 				</li>

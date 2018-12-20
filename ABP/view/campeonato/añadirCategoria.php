@@ -3,57 +3,19 @@
 require_once(__DIR__ . "/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
-$campeonatos = $view->getVariable("campeonatos");
-$view->setVariable("title", "Crear Campeonato");
+$campeonato = $view->getVariable("campeonato");
+$view->setVariable("title", "Añadir Categoria");
 ?>
 
 <html lang="es">
     <body>
-        <script>
-
-            function compareB() {
-
-                var startDt = document.getElementById("inicio_ins").value;
-                var endDt = document.getElementById("fin_ins").value;
-
-                if ((new Date(startDt).getTime() > new Date(endDt).getTime())) {
-
-                    alert("Cuidado, la fecha de finalizacion es anterior a la inicio");
-                    document.getElementById('fin_ins').value = "";
-                    return false;
-                }
-            }
-            function compareA() {
-
-                var startDt = document.getElementById("inicio").value;
-                var endDt = document.getElementById("fin").value;
-
-                if ((new Date(startDt).getTime() > new Date(endDt).getTime())) {
-
-                    alert("Cuidado, la fecha de finalizacion es anterior a la inicio");
-                    document.getElementById('fin').value = "";
-                    return false;
-                }
-            }
-
-        </script>
         <div class="container">
             <div class="row">
                 <div class="col-md-auto">
-                    <h3>Crear campeonato nuevo</h3>
-                    <form name="crearcampeonato" action="index.php?controller=Campeonato&amp;action=add" method="POST">
-                        <label>Nombre del campeonato</label>
-                        <input type="text" name="nombreCampeonato" required/><br><br>
-                        <label>Fecha inicio</label>
-                        <input type="date" id="inicio" name="fechaInicio" value="" required/><br>
-                        <label>Fecha finalización</label>
-                        <input type="date" id="fin" name="fechaFin" value="" onblur="compareA();" required/><br>
-                        <label>Fecha inscripciones</label>
-                        <input type="date" id ="inicio_ins" name="inicioInscripcion" value="" required/><br>
-                        <label>Fecha fin inscripciones</label>
-                        <input type="date" id="fin_ins" name="finInscripcion" value=""  onblur="compareB();" required/><br><br>
+                    <h3>Añadir Categoria</h3>
+                    <form name="crearcampeonato" action="index.php?controller=Campeonato&amp;action=addCategoria" method="POST">
                         <div class="col-auto">
-                        <label>Categoria</label>
+                            <label>Categoria</label>
                         </div>
                         <div class="row">
                             <div class="col-auto">
@@ -109,17 +71,17 @@ $view->setVariable("title", "Crear Campeonato");
                         <label>Número de participantes por categoria</label>
                         <input type="number" name="maxParticipantes" min="4" max="12">
                         <br><br>
-                        <label>Reglas</label><br>
-                        <textarea name="reglas" rows="3" cols="40"></textarea><br><br>
-                        <input type="submit" name="submit" value="Crear campeonato">
+                        <input type="hidden" value="<?php echo $campeonato["idCampeonato"] ?>" name="idCampeonato" />
+                        <input type="submit" name="submit" value="Añadir Categorias">
                     </form>
                 </div>
             </div>
         </div>
 
-<footer>
-    <p>ABP_23</p>
-</footer>
 
-</body>
+        <footer>
+            <p>ABP_23</p>
+        </footer>
+
+    </body>
 </html>

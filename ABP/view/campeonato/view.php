@@ -1,13 +1,11 @@
 <?php
-
-require_once(__DIR__."/../../core/ViewManager.php");
+require_once(__DIR__ . "/../../core/ViewManager.php");
 
 $view = ViewManager::getInstance();
 
 $campeonato = $view->getVariable("campeonato");
 $categorias = $view->getVariable("categorias");
 $view->setVariable("title", "Campeonato");
-
 ?>
 
 <html lang="es">
@@ -24,6 +22,7 @@ $view->setVariable("title", "Campeonato");
                 <div class="col"><h5>Fecha inicio inscripciones <?php echo $campeonato["inicioInscripcion"]; ?></h5></div>
                 <div class="col"><h5>Fecha fin inscripciones <?php echo $campeonato["finInscripcion"]; ?></h5></div>
             </div>
+            <br>
         </div>
         <br>
         <div class="table-responsive">
@@ -36,24 +35,31 @@ $view->setVariable("title", "Campeonato");
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if($categorias != NULL){ foreach ($categorias as $categoria): ?>
-                        <tr>
-                            <td><?= $categoria["nivel"]; ?> </td>
-                            <td><?= $categoria["tipo"]; ?> </td>
-                            <td><?= $categoria["maxParticipantes"]; ?> </td>
-                        </tr>
-                    <?php endforeach;} ?>
+                    <?php
+                    if ($categorias != NULL) {
+                        foreach ($categorias as $categoria):
+                            ?>
+                            <tr>
+                                <td><?= $categoria["nivel"]; ?> </td>
+                                <td><?= $categoria["tipo"]; ?> </td>
+                                <td><?= $categoria["maxParticipantes"]; ?> </td>
+                            </tr>
+                            <?php
+                        endforeach;
+                    }?>
                 </tbody>
             </table>
-        </main>
-    </div>
-</div>
+        </div>
+        <div>
+                <?php if ($categorias == NULL) { ?>
+                <a href="index.php?controller=campeonato&amp;action=anadirCategoria&amp;id=<?= $campeonato["idCampeonato"] ?>">Añadir Categorias</a>
+                <?php } ?>
+            </div>
+        <footer>
+            <p>ABP_23</p>
+        </footer>
 
-<footer>
-    <p>ABP_23</p>
-</footer>
-
-</body>
+    </body>
 </html>
 
 

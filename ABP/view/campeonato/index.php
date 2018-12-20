@@ -4,11 +4,13 @@ require_once(__DIR__ . "/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $campeonatos = $view->getVariable("campeonatos");
+$gruposCampeonatos = $view->getVariable("gruposCampeonatos");
 $view->setVariable("title", "Crear Campeonato");
 ?>
 
 <html lang="es">
     <body>
+        <?php var_dump($gruposCampeonatos[0]->getCampeonato()->getIdCampeonato()); ?>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -31,7 +33,17 @@ $view->setVariable("title", "Crear Campeonato");
                             <td>
                                 <a href="index.php?controller=campeonato&amp;action=view&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Consultar</a>
                                 <a href="index.php?controller=campeonato&amp;action=modificar&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Modificar</a>
-                                <a href="index.php?controller=campeonato&amp;action=eliminar&amp;id=<?= $campeonato->getIdCampeonato(); ?>" onclick="return confirm('¿Confirmas que quieres eliminar este campeonato: <?php echo $campeonato->getNombreCampeonato() ?> ?')">Eliminar</a>
+                                <?php
+                                $show = true;
+                                foreach ($gruposCampeonatos as $grupo):
+                                    if ($grupo->getCampeonato()->getIdCampeonato() == $campeonato->getIdCampeonato()) {
+                                        $show = false;
+                                    }
+                                endforeach;
+                                if ($show) {
+                                    ?>
+                                    <a href="index.php?controller=campeonato&amp;action=eliminar&amp;id=<?= $campeonato->getIdCampeonato(); ?>" onclick="return confirm('¿Confirmas que quieres eliminar este campeonato: <?php echo $campeonato->getNombreCampeonato() ?> ?')">Eliminar</a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

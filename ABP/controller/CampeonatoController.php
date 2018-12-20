@@ -6,6 +6,7 @@ require_once(__DIR__ . "/../model/Categoria.php");
 require_once(__DIR__ . "/../model/CategoriaMapper.php");
 require_once(__DIR__ . "/../model/CampeonatoCategoria.php");
 require_once(__DIR__ . "/../model/CampeonatoCategoriaMapper.php");
+require_once(__DIR__."/../model/GrupoMapper.php");
 
 require_once(__DIR__ . "/../core/ViewManager.php");
 require_once(__DIR__ . "/../controller/BaseController.php");
@@ -22,6 +23,7 @@ class CampeonatoController extends BaseController {
         $this->campeonatoMapper = new CampeonatoMapper();
         $this->categoriaMapper = new CategoriaMapper();
         $this->campeonatoCategoriaMapper = new campeonatoCategoriaMapper();
+        $this->grupoMapper = new GrupoMapper();
     }
 
     public function index() {
@@ -34,6 +36,8 @@ class CampeonatoController extends BaseController {
             //$this->view->setVariable("errors", $errors);
             //$this->view->redirect("home", "index");
             //}
+            $gruposCampeonatos = $this->grupoMapper->findAll();
+            $this->view->setVariable("gruposCampeonatos", $gruposCampeonatos, false);
             $campeonatos = $this->campeonatoMapper->findAll();
             $this->view->setVariable("campeonatos", $campeonatos, false);
             $this->view->render("campeonato", "index");
@@ -267,5 +271,138 @@ class CampeonatoController extends BaseController {
         $this->view->setVariable("campeonatos", $campeonatos, false);
         $this->view->render("campeonato", "index");
      }
+     
+     public function anadirCategoria(){
+         
+         if (!isset($_REQUEST["id"])) {
+            throw new Exception("Necesario un identificador de campeonato");
+        }
+
+        $idCampeonato = $_REQUEST["id"];
+
+        if ($idCampeonato == NULL) {
+            throw new Exception("No se han realizado campeonatos");
+        }
+
+        $campeonato = $this->campeonatoMapper->findById($idCampeonato);
+        $this->view->setVariable("campeonato", $campeonato, false);
+
+        $this->view->render("campeonato", "añadirCategoria");
+     }
+     
+     public function addCategoria() {
+
+        function anadirCategoria($idCampeonato, $tipoCategoria, $nivel) {
+
+            $categoria = new Categoria();
+            $categoriaMapper = new CategoriaMapper();
+            $campeonatoCategoria = new CampeonatoCategoria();
+            $campeonatoCategoriaMapper = new CampeonatoCategoriaMapper();
+
+            $categoria->setTipo($tipoCategoria);
+            $categoria->setNivel($nivel);
+            $categoria->setMaxParticipantes($_POST["maxParticipantes"]);
+
+            try {
+
+                $categoria->checkIsValidForCreate();
+                $idCategoria = $categoriaMapper->save($categoria);
+
+            } catch (ValidationException $ex) {
+                $errors = $ex->getErrors();
+                $this->view->setVariable("errors", $errors);
+            }
+
+            $campeonatoCategoria->setIdCampeonato($idCampeonato);
+            $campeonatoCategoria->setIdCategoria($idCategoria);
+
+            try {
+
+                $campeonatoCategoria->checkIsValidForCreate();
+                $campeonatoCategoriaMapper->save($campeonatoCategoria);
+
+            } catch (ValidationException $ex) {
+                $errors = $ex->getErrors();
+                $this->view->setVariable("errors", $errors);
+            }
+        }
+
+
+        if (isset($_POST["idCampeonato"])) {
+            
+            $idcam = $_POST["idCampeonato"];
+            
+            try {
+
+                if (isset($_POST["masculina"])) {
+
+                    $tipoCategoria = $_POST["masculina"];
+
+                    if (isset($_POST["nivelMAS1"])) {
+
+                        $nivel = $_POST["nivelMAS1"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelMAS2"])) {
+
+                        $nivel = $_POST["nivelMAS2"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelMAS3"])) {
+
+                        $nivel = $_POST["nivelMAS3"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                }
+                if (isset($_POST["femenina"])) {
+
+                    $tipoCategoria = $_POST["femenina"];
+
+                    if (isset($_POST["nivelFEM1"])) {
+
+                        $nivel = $_POST["nivelFEM1"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelFEM2"])) {
+
+                        $nivel = $_POST["nivelFEM2"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelFEM3"])) {
+
+                        $nivel = $_POST["nivelFEM3"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                }
+                if (isset($_POST["mixta"])) {
+
+                    $tipoCategoria = $_POST["mixta"];
+
+                    if (isset($_POST["nivelMIX1"])) {
+
+                        $nivel = $_POST["nivelMIX1"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelMIX2"])) {
+
+                        $nivel = $_POST["nivelMIX2"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                    if (isset($_POST["nivelMIX3"])) {
+
+                        $nivel = $_POST["nivelMIX3"];
+                        anadirCategoria($idcam, $tipoCategoria, $nivel);
+                    }
+                }
+            } catch (ValidationException $ex) {
+                $errors = $ex->getErrors();
+                $this->view->setVariable("errors", $errors);
+            }
+        }
+            $campeonatos = $this->campeonatoMapper->findAll();
+            $this->view->setVariable("campeonatos", $campeonatos, false);
+            $this->view->render("campeonato", "index");
+
+    }
 
 }
