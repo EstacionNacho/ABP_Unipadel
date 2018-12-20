@@ -27,18 +27,4 @@ class establecerPistasMapper {
 		$stmt->execute(array($horario->getHora(),$horario->getHorarioIdPista(),$horario->getDisponibilidad(),$horario->getFecha()));
 		return $this->db->lastInsertId();
 	}
-
-        public function findAll(){
-            
-        $stmt = $this->db->query("SELECT * FROM Horario");
-        $stmt->execute();
-        $horarios_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $horarios = array();
-
-        foreach ($horarios_db as $horario) {
-            array_push($horarios, new Horario($horario["fecha"], $horario["idPista"], $horario["horario"], $horario["disponibilidad"]));
-        }
-
-        return $horarios;
-        }
 }

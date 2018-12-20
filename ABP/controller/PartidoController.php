@@ -3,8 +3,7 @@
 require_once(__DIR__ . "/../model/Partido.php");
 require_once(__DIR__ . "/../model/PartidoMapper.php");
 require_once(__DIR__ . "/../model/PartidoMapper.php");
-require_once(__DIR__."/../model/establecerPistas.php");
-require_once(__DIR__."/../model/establecerPistasMapper.php");
+
 
 require_once(__DIR__ . "/../core/ViewManager.php");
 require_once(__DIR__ . "/../controller/BaseController.php");
@@ -17,13 +16,11 @@ class PartidoController extends BaseController {
         parent::__construct();
 
         $this->partidoMapper = new PartidoMapper();
-        $this->establecerPistasMapper = new establecerPistasMapper();
     }
 
     public function index() {
         
-    $horarios = $this->establecerPistasMapper->findAll();
-    $this->view->setVariable("horarios", $horarios, false);
+
     $partidos = $this->partidoMapper->findAll();
     $this->view->setVariable("partidos", $partidos, false);
     $this->view->render("partido", "index");

@@ -8,6 +8,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 /**
 * @author Victor
 */
+
 class RealizarReservaController extends BaseController {
 
 	private $RealizarReservaController;
@@ -49,11 +50,6 @@ class RealizarReservaController extends BaseController {
 				$this->view->setFlash("Operación realizada");
 				$this->GestionarReservasMapper->updateHorario($disponibilidad,$pista,$hora,$fecha);
 			}
-			?>
-			<script>
-			 alert('Operacion realizada');
-			 </script>;
-			<?
 
 			$this->view->render("reservas", "gestionarReservas");
 
