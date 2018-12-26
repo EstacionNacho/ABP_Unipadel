@@ -10,6 +10,7 @@ $view->setVariable("title", "Campeonato");
 
 <html lang="es">
     <body>
+
         <div class="container">
             <div class="row">
                 <h5><?php echo $campeonato["nombre"]; ?></h5>
@@ -42,7 +43,7 @@ $view->setVariable("title", "Campeonato");
                             <tr>
                                 <td><?= $categoria["nivel"]; ?> </td>
                                 <td><?= $categoria["tipo"]; ?> </td>
-                                <td><?= $categoria["maxParticipantes"]; ?> </td>
+                                <td><?= $categoria["maxParticipantes"]; ?></td>
                             </tr>
                             <?php
                         endforeach;

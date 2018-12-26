@@ -37,5 +37,15 @@ class CategoriaMapper {
 
         return $categoria;
     }
+    
+    public function findCategoria($idCategoria,$nivel,$tipo){
+    
+        $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria AND nivel = $nivel AND tipo = '$tipo' ");
+            
+        $stmt->execute();
+        $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        return $categoria;
+    }
+    
 }

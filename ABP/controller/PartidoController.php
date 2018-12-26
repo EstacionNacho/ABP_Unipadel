@@ -2,8 +2,6 @@
 
 require_once(__DIR__ . "/../model/Partido.php");
 require_once(__DIR__ . "/../model/PartidoMapper.php");
-require_once(__DIR__ . "/../model/PartidoMapper.php");
-
 
 require_once(__DIR__ . "/../core/ViewManager.php");
 require_once(__DIR__ . "/../controller/BaseController.php");

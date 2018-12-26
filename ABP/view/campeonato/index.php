@@ -30,6 +30,7 @@ $view->setVariable("title", "Crear Campeonato");
                             <td><?= $campeonato->getInicioInscripcion(); ?> </td>
                             <td><?= $campeonato->getFinInscripcion(); ?> </td>
                             <td>
+                                <a href="index.php?controller=campeonato&amp;action=inscribir&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Inscribirse</a>
                                 <a href="index.php?controller=campeonato&amp;action=view&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Consultar</a>
                                 <a href="index.php?controller=campeonato&amp;action=modificar&amp;id=<?= $campeonato->getIdCampeonato(); ?>">Modificar</a>
                                 <?php

@@ -7,6 +7,8 @@ require_once(__DIR__ . "/../model/CategoriaMapper.php");
 require_once(__DIR__ . "/../model/CampeonatoCategoria.php");
 require_once(__DIR__ . "/../model/CampeonatoCategoriaMapper.php");
 require_once(__DIR__."/../model/GrupoMapper.php");
+require_once(__DIR__ . "/../model/Pareja.php");
+require_once(__DIR__ . "/../model/ParejaMapper.php");
 
 require_once(__DIR__ . "/../core/ViewManager.php");
 require_once(__DIR__ . "/../controller/BaseController.php");
@@ -16,6 +18,7 @@ class CampeonatoController extends BaseController {
     private $campeonatoMapper;
     private $categoriaMapper;
     private $campeonatoCategoriaMapper;
+    private $parejaMapper;
 
     public function __construct() {
         parent::__construct();
@@ -24,6 +27,7 @@ class CampeonatoController extends BaseController {
         $this->categoriaMapper = new CategoriaMapper();
         $this->campeonatoCategoriaMapper = new campeonatoCategoriaMapper();
         $this->grupoMapper = new GrupoMapper();
+        $this->parejaMapper = new ParejaMapper();
     }
 
     public function index() {
@@ -404,5 +408,59 @@ class CampeonatoController extends BaseController {
             $this->view->render("campeonato", "index");
 
     }
+    
+    public function inscribir() {
 
+        if (!isset($_REQUEST["id"])) {
+            throw new Exception("Necesario un identificador de campeonato");
+        }
+
+        $idCampeonato = $_REQUEST["id"];
+
+        if ($idCampeonato == NULL) {
+            throw new Exception("No se han realizado campeonatos");
+        }
+
+        $campeonato = $this->campeonatoMapper->findById($idCampeonato);
+        $idCategorias = $this->campeonatoCategoriaMapper->findByCampeonatoId($idCampeonato);
+        $categorias = $this->categoriaMapper->findById($idCategorias);
+        
+	$this->view->setVariable("campeonato", $campeonato, false);
+	$this->view->setVariable("categorias", $categorias, false);
+
+	$this->view->render("campeonato", "inscribirse");
+
+    }
+    
+    public function inscribirse() {
+
+        if (!isset($_REQUEST["idCampeonato"]) && !isset($_REQUEST["idCategoria"])) {
+            throw new Exception("Necesario un identificador de campeonato");
+        }
+
+        $idCampeonato = $_REQUEST["idCampeonato"];
+        $idCategoria = $_REQUEST["idCategoria"];
+        $nivel = $_REQUEST["nivel"];
+        $tipo = $_REQUEST["tipo"];
+
+        if ($idCampeonato == NULL && $idCategoria == NULL) {
+            throw new Exception("Faltan datos");
+        }
+
+        $campeonato = $this->campeonatoMapper->findById($idCampeonato);
+        $categoria = $this->categoriaMapper->findCategoria($idCategoria,$nivel,$tipo);
+        $grupos = $this->grupoMapper->findByCampeonatoCategoria($idCampeonato,$idCategoria);
+        $numParticipantes = $this->parejaMapper->countByGrupo($grupos);
+        /*
+	$this->view->setVariable("campeonato", $campeonato, false);
+	$this->view->setVariable("categoria", $categoria, false);
+        $this->view->setVariable("grupos", $grupos, false);
+        $this->view->setVariable("numParticipantes", $numParticipantes, false);
+        
+	$this->view->render("campeonato", "inscribirse");
+        */
+        
+        
+        
+    }
 }

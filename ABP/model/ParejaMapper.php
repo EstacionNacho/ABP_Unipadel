@@ -350,16 +350,30 @@ class ParejaMapper {
 			$clasificacion_db = $stmt->fetch(PDO::FETCH_ASSOC);
 
 			//Si no existe insertamos las parejas
-			if($clasificacion_db==NULL){
-				foreach ($parejasSemifinales as $pareja) {
-						$stmt = $this->db->prepare("INSERT INTO Clasificacion(ParejaidPareja,
+        if ($clasificacion_db == NULL) {
+            foreach ($parejasSemifinales as $pareja) {
+                $stmt = $this->db->prepare("INSERT INTO Clasificacion(ParejaidPareja,
 							 resultado, GrupoidGrupo, GrupotipoLiga, CampeonatoidCampeonato) values (?,?,?,?,?)");
-						$stmt->execute(array($pareja['ParejaidPareja1'], $pareja['resultado'], $pareja['idGrupo'], 'cuartos', $campeonatoId));
+                $stmt->execute(array($pareja['ParejaidPareja1'], $pareja['resultado'], $pareja['idGrupo'], 'cuartos', $campeonatoId));
+            }
+        }
 
-				}
-			}
+        return $this->db->lastInsertId();
+    }
 
-				return $this->db->lastInsertId();
-		}
+    public function countByGrupo($idGrupos) {
 
-	}
+        $numParejas = NULL;
+
+        foreach ($idGrupos as $idGrupo) {
+            
+            $stmt = $this->db->prepare("SELECT GrupoidGrupo, COUNT(*) FROM Pareja WHERE GrupoidGrupo = $idGrupo[idGrupo] ");
+            $stmt->execute();
+            $numParejas[$idGrupo["idGrupo"]] = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        }
+     
+        return $numParejas;
+    }
+
+}
