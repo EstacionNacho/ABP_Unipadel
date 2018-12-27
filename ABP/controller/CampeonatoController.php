@@ -434,31 +434,50 @@ class CampeonatoController extends BaseController {
     
     public function inscribirse() {
 
-        if (!isset($_REQUEST["idCampeonato"]) && !isset($_REQUEST["idCategoria"])) {
+        if (!isset($_POST["idCampeonato"])) {
             throw new Exception("Necesario un identificador de campeonato");
         }
 
-        $idCampeonato = $_REQUEST["idCampeonato"];
-        $idCategoria = $_REQUEST["idCategoria"];
-        $nivel = $_REQUEST["nivel"];
-        $tipo = $_REQUEST["tipo"];
+        $idCampeonato = $_POST["idCampeonato"];
 
-        if ($idCampeonato == NULL && $idCategoria == NULL) {
+        $nivel = $_POST["nivel"];
+        $tipo = $_POST["tipo"];
+
+        if ($idCampeonato == NULL) {
             throw new Exception("Faltan datos");
         }
 
         $campeonato = $this->campeonatoMapper->findById($idCampeonato);
-        $categoria = $this->categoriaMapper->findCategoria($idCategoria,$nivel,$tipo);
-        $grupos = $this->grupoMapper->findByCampeonatoCategoria($idCampeonato,$idCategoria);
-        $numParticipantes = $this->parejaMapper->countByGrupo($grupos);
-        /*
-	$this->view->setVariable("campeonato", $campeonato, false);
-	$this->view->setVariable("categoria", $categoria, false);
-        $this->view->setVariable("grupos", $grupos, false);
-        $this->view->setVariable("numParticipantes", $numParticipantes, false);
+        $categoria = $this->categoriaMapper->findByTipoNivel($idCampeonato, $nivel, $tipo);
+        $grupos = $this->grupoMapper->findByCampeonatoCategoria($idCampeonato, $categoria["idCategoria"]);
+        $idGrupo = NULL;
+        if ($grupos == NULL) {
+            $idGrupo = $this->parejaMapper->crearGrupo($idCampeonato, $categoria["idCategoria"], "regular");
+        } else {
+            foreach ($grupos as $grupo) {
+                $numParticipantes = $this->parejaMapper->countByGrupo($grupo["idGrupo"]);
+                if ($numParticipantes["cont"] < $categoria["maxParticipantes"]) {
+                    $idGrupo = $grupo["idGrupo"];
+                }
+            }
+        }
+        if($idGrupo == NULL){
+            $idGrupo = $this->parejaMapper->crearGrupo($idCampeonato, $categoria["idCategoria"], "regular");
+        }
+        var_dump($idGrupo);
+        //comprobar if usuarios correctos
+        //con idGrupo añadir a pareja $_POST["nombreCapitan"] $_POST["nombreDeportista"] GrupoidGrupo GrupoTipoLiga
         
-	$this->view->render("campeonato", "inscribirse");
-        */
+        die;
+
+        /*
+          $this->view->setVariable("campeonato", $campeonato, false);
+          $this->view->setVariable("categoria", $categoria, false);
+          $this->view->setVariable("grupos", $grupos, false);
+          $this->view->setVariable("numParticipantes", $numParticipantes, false);
+
+          $this->view->render("campeonato", "inscribirse");
+         */
         
         
         

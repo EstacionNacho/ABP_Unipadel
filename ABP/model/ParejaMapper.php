@@ -361,18 +361,12 @@ class ParejaMapper {
         return $this->db->lastInsertId();
     }
 
-    public function countByGrupo($idGrupos) {
+    public function countByGrupo($idGrupo) {
 
-        $numParejas = NULL;
+        $stmt = $this->db->prepare("SELECT COUNT(*) as cont FROM Pareja WHERE GrupoidGrupo = $idGrupo ");
+        $stmt->execute();
+        $numParejas = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        foreach ($idGrupos as $idGrupo) {
-            
-            $stmt = $this->db->prepare("SELECT GrupoidGrupo, COUNT(*) FROM Pareja WHERE GrupoidGrupo = $idGrupo[idGrupo] ");
-            $stmt->execute();
-            $numParejas[$idGrupo["idGrupo"]] = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        }
-     
         return $numParejas;
     }
 

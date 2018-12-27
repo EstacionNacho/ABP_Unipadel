@@ -47,5 +47,24 @@ class CategoriaMapper {
 
         return $categoria;
     }
-    
+
+    public function findByTipoNivel($idCampeonato, $nivel, $tipo) {
+
+        $stmt = $this->db->prepare("SELECT idCategoria FROM Campeonato_Categoria WHERE idCampeonato = $idCampeonato");
+        $stmt->execute();
+        $idCategorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($idCategorias as $idCategoria) {
+
+            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[idCategoria] AND nivel = $nivel AND tipo = '$tipo' ");
+            $stmt->execute();
+            $categoria_aux = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($categoria_aux == !false) {
+                $categoria = $categoria_aux;
+            }
+        }
+        return $categoria;
+    }
+
 }

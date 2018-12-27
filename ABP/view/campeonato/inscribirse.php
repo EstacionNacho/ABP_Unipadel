@@ -7,11 +7,6 @@ $errors = $view->getVariable("errors");
 $campeonato = $view->getVariable("campeonato");
 $categorias = $view->getVariable("categorias");
 
-$campeonatos = $view->getVariable("campeonatos");
-$categoria = $view->getVariable("categoria");
-$grupos = $view->getVariable("grupos");
-$numParticipantes = $view->getVariable("numParticipantes");
-
 $view->setVariable("title", "Inscribirse Campeonato");
 ?>
 
@@ -72,9 +67,9 @@ $view->setVariable("title", "Inscribirse Campeonato");
                             <input type="radio" name="nivel" value="2" required> 2<br>
                             <input type="radio" name="nivel" value="3" required> 3<br>
                             <label>Tipo</label><br>
-                            <input type="radio" name="tipo" value="Masculina" required> Masculino<br>
-                            <input type="radio" name="tipo" value="Femenina" required> Femenino<br>
-                            <input type="radio" name="tipo" value="Mixto" required> Mixto<br>
+                            <input type="radio" name="tipo" value="Masculina" required> Masculina<br>
+                            <input type="radio" name="tipo" value="Femenina" required> Femenina<br>
+                            <input type="radio" name="tipo" value="Mixta" required> Mixta<br>
                             <input type="hidden" value="<?php echo $campeonato["idCampeonato"] ?>" name="idCampeonato" />
                             <input type="submit" name="submit" value="Inscribirse">
                         </form>
