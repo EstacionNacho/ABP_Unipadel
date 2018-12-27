@@ -6,6 +6,7 @@ $partidos = $view->getVariable("partidos");
 $fecha = $view->getVariable("fecha");
 $anterior = 0;
 $view->setVariable("title", "Crear Partido");
+
 ?>
 
 <html lang="es">
@@ -31,7 +32,7 @@ $view->setVariable("title", "Crear Partido");
         <?php if ($anterior != $pista->getHorarioIdPista()) { ?>
                             <thead><tr><th>Pista: <?php $pista->getHorarioIdPista(); ?></th></tr></thead>
 
-                            <?php
+                            <?php                    
                             $anterior = $pista->getHorarioIdPista();
                         }
                         ?>

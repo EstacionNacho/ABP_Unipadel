@@ -75,6 +75,7 @@ class RealizarReservaController extends BaseController {
 			if($disponibilidad=='disponible'){
 				$disponibilidad='ocupado';
 				$reserva->setDisponibilidad('ocupado');
+                                var_dump($reserva);die;
 				$this->RealizarReservaMapper->insertarReserva($reserva);
                                 var_dump($reserva);die;
 				$this->view->setFlash("Operación realizada");
