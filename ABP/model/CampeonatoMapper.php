@@ -21,7 +21,7 @@ class CampeonatoMapper {
         $campeonatos = array();
 
         foreach ($campeonatos_db as $campeonato) {
-            array_push($campeonatos, new Campeonato($campeonato["idCampeonato"], $campeonato["nombre"], $campeonato["fechaInicio"], $campeonato["fechaFin"], $campeonato["inicioInscripcion"], $campeonato["finInscripcion"], NULL));
+            array_push($campeonatos, new Campeonato($campeonato["idCampeonato"], $campeonato["nombre"], $campeonato["fechaInicio"], $campeonato["fechaFin"], $campeonato["fechaInicioInscripciones"], $campeonato["fechaFinInscripciones"], NULL));
         }
 
         return $campeonatos;
@@ -38,7 +38,7 @@ class CampeonatoMapper {
 
     public function save(Campeonato $campeonato) {
 
-        $stmt = $this->db->prepare("INSERT INTO Campeonato(nombre, fechaInicio, fechaFin, inicioInscripcion, finInscripcion, reglas) values (?,?,?,?,?,?)");
+        $stmt = $this->db->prepare("INSERT INTO Campeonato(nombre, fechaInicio, fechaFin, fechaInicioInscripciones, fechaFinInscripciones, reglas) values (?,?,?,?,?,?)");
         $stmt->execute(array($campeonato->getNombreCampeonato(), $campeonato->getFechaInicio(), $campeonato->getFechaFin(), $campeonato->getInicioInscripcion(), $campeonato->getFinInscripcion(), $campeonato->getReglas()));
         return $this->db->lastInsertId();
     }
@@ -47,7 +47,7 @@ class CampeonatoMapper {
         
         $idCampeonato = $campeonato->getIdCampeonato();
 
-        $stmt = $this->db->prepare("UPDATE Campeonato SET nombre = ?,fechaInicio = ?,fechaFin = ?,inicioInscripcion = ?,finInscripcion = ?,reglas = ? WHERE idCampeonato=$idCampeonato");
+        $stmt = $this->db->prepare("UPDATE Campeonato SET nombre = ?,fechaInicio = ?,fechaFin = ?,fechaInicioInscripciones = ?,fechaFinInscripciones = ?,reglas = ? WHERE idCampeonato=$idCampeonato");
         $stmt->execute(array($campeonato->getNombreCampeonato(), $campeonato->getFechaInicio(), $campeonato->getFechaFin(), $campeonato->getInicioInscripcion(), $campeonato->getFinInscripcion(), $campeonato->getReglas()));
     }
     

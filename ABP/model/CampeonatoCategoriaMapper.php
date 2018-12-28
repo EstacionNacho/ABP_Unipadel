@@ -14,13 +14,13 @@ class CampeonatoCategoriaMapper {
 
 	public function save(CampeonatoCategoria $campeonatoCategoria) {
 
-		$stmt = $this->db->prepare("INSERT INTO Campeonato_Categoria(idCampeonato, idCategoria) values (?,?)");
+		$stmt = $this->db->prepare("INSERT INTO Campeonato_Categoria(CampeonatoidCampeonato, CategoriaidCategoria) values (?,?)");
 		$stmt->execute(array($campeonatoCategoria->getIdCampeonato(),$campeonatoCategoria->getIdCategoria()));
 	}
         
         public function findByCampeonatoId($idCampeonato){
             
-        $stmt = $this->db->query("SELECT idCategoria FROM Campeonato_Categoria WHERE idCampeonato = $idCampeonato");
+        $stmt = $this->db->query("SELECT CategoriaidCategoria FROM Campeonato_Categoria WHERE CampeonatoidCampeonato = $idCampeonato");
 	$categorias_db = $stmt->fetchall(PDO::FETCH_ASSOC);
         return $categorias_db;
         }

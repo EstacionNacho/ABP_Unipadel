@@ -22,8 +22,8 @@ $view->setVariable("title", "Inscribirse Campeonato");
                 <div class="col"><h5>Fecha Fin <?php echo $campeonato["fechaFin"]; ?></h5></div>
             </div>
             <div class="row">
-                <div class="col"><h5>Fecha inicio inscripciones <?php echo $campeonato["inicioInscripcion"]; ?></h5></div>
-                <div class="col"><h5>Fecha fin inscripciones <?php echo $campeonato["finInscripcion"]; ?></h5></div>
+                <div class="col"><h5>Fecha inicio inscripciones <?php echo $campeonato["fechaInicioInscripciones"]; ?></h5></div>
+                <div class="col"><h5>Fecha fin inscripciones <?php echo $campeonato["fechaFinInscripciones"]; ?></h5></div>
             </div>
             <br>
         </div>
@@ -57,7 +57,7 @@ $view->setVariable("title", "Inscribirse Campeonato");
                 <div class="row">
                     <div class="col-md-auto">
                         <h3>Inscribirse Campeonato</h3>
-                        <form name="crearcampeonato" action="index.php?controller=Campeonato&amp;action=inscribirse" method="POST">
+                        <form name="inscribirsecampeonato" action="index.php?controller=Campeonato&amp;action=inscribirse" method="POST">
                             <label>Usuario capitan</label>
                             <input type="text" name="nombreCapitan" value="" required/><br>
                             <label>Usuario compañero </label>

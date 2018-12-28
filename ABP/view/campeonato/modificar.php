@@ -49,9 +49,9 @@ $view->setVariable("title", "Crear Campeonato");
                         <label>Fecha finalización</label>
                         <input type="date" id="fin" name="fechaFin" value="<?php echo $campeonato["fechaFin"] ?>" onblur="compareA();" required/><br>
                         <label>Fecha inscripciones</label>
-                        <input type="date" id ="inicio_ins" name="inicioInscripcion" value="<?php echo $campeonato["inicioInscripcion"] ?>" required/><br>
+                        <input type="date" id ="inicio_ins" name="inicioInscripcion" value="<?php echo $campeonato["fechaInicioInscripciones"] ?>" required/><br>
                         <label>Fecha fin inscripciones</label>
-                        <input type="date" id="fin_ins" name="finInscripcion" value="<?php echo $campeonato["finInscripcion"] ?>"  onblur="compareB();" required/><br><br>                     
+                        <input type="date" id="fin_ins" name="finInscripcion" value="<?php echo $campeonato["fechaFinInscripciones"] ?>"  onblur="compareB();" required/><br><br>                     
                         <label>Reglas</label><br>
                         <textarea name="reglas" rows="3" cols="40"><?php echo $campeonato["reglas"] ?></textarea><br><br>
                         <input type="hidden" value="<?php echo $campeonato["idCampeonato"] ?>" name="idCampeonato" />

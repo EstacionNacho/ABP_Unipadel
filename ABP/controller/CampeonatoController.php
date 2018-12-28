@@ -87,9 +87,11 @@ class CampeonatoController extends BaseController {
             }
         }
 
-        $campeonatos = $this->campeonatoMapper->findAll();
-        $this->view->setVariable("campeonatos", $campeonatos, false);
-        $this->view->render("campeonato", "index");
+        $gruposCampeonatos = $this->grupoMapper->findAll();
+            $this->view->setVariable("gruposCampeonatos", $gruposCampeonatos, false);
+            $campeonatos = $this->campeonatoMapper->findAll();
+            $this->view->setVariable("campeonatos", $campeonatos, false);
+            $this->view->render("campeonato", "index");
     }
 
     public function add() {
@@ -210,6 +212,8 @@ class CampeonatoController extends BaseController {
                 $this->view->setVariable("errors", $errors);
             }
         }
+            $gruposCampeonatos = $this->grupoMapper->findAll();
+            $this->view->setVariable("gruposCampeonatos", $gruposCampeonatos, false);
             $campeonatos = $this->campeonatoMapper->findAll();
             $this->view->setVariable("campeonatos", $campeonatos, false);
             $this->view->render("campeonato", "index");
@@ -271,9 +275,11 @@ class CampeonatoController extends BaseController {
         
         $this->campeonatoMapper->delete($idCampeonato);
         
-        $campeonatos = $this->campeonatoMapper->findAll();
-        $this->view->setVariable("campeonatos", $campeonatos, false);
-        $this->view->render("campeonato", "index");
+        $gruposCampeonatos = $this->grupoMapper->findAll();
+            $this->view->setVariable("gruposCampeonatos", $gruposCampeonatos, false);
+            $campeonatos = $this->campeonatoMapper->findAll();
+            $this->view->setVariable("campeonatos", $campeonatos, false);
+            $this->view->render("campeonato", "index");
      }
      
      public function anadirCategoria(){
@@ -403,6 +409,8 @@ class CampeonatoController extends BaseController {
                 $this->view->setVariable("errors", $errors);
             }
         }
+            $gruposCampeonatos = $this->grupoMapper->findAll();
+            $this->view->setVariable("gruposCampeonatos", $gruposCampeonatos, false);
             $campeonatos = $this->campeonatoMapper->findAll();
             $this->view->setVariable("campeonatos", $campeonatos, false);
             $this->view->render("campeonato", "index");
@@ -446,7 +454,7 @@ class CampeonatoController extends BaseController {
         if ($idCampeonato == NULL) {
             throw new Exception("Faltan datos");
         }
-
+        
         $campeonato = $this->campeonatoMapper->findById($idCampeonato);
         $categoria = $this->categoriaMapper->findByTipoNivel($idCampeonato, $nivel, $tipo);
         $grupos = $this->grupoMapper->findByCampeonatoCategoria($idCampeonato, $categoria["idCategoria"]);

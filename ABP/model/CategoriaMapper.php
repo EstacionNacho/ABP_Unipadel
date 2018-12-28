@@ -30,9 +30,9 @@ class CategoriaMapper {
         
         foreach ($idCategorias as $idCategoria) {
 
-            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[idCategoria]");
+            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[CategoriaidCategoria]");
             $stmt->execute();
-            $categoria[$idCategoria["idCategoria"]] = $stmt->fetch(PDO::FETCH_ASSOC);
+            $categoria[$idCategoria["CategoriaidCategoria"]] = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         return $categoria;
@@ -50,13 +50,13 @@ class CategoriaMapper {
 
     public function findByTipoNivel($idCampeonato, $nivel, $tipo) {
 
-        $stmt = $this->db->prepare("SELECT idCategoria FROM Campeonato_Categoria WHERE idCampeonato = $idCampeonato");
+        $stmt = $this->db->prepare("SELECT CategoriaidCategoria FROM Campeonato_Categoria WHERE  CampeonatoidCampeonato = $idCampeonato");
         $stmt->execute();
         $idCategorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($idCategorias as $idCategoria) {
 
-            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[idCategoria] AND nivel = $nivel AND tipo = '$tipo' ");
+            $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[CategoriaidCategoria] AND nivel = $nivel AND tipo = '$tipo' ");
             $stmt->execute();
             $categoria_aux = $stmt->fetch(PDO::FETCH_ASSOC);
 
