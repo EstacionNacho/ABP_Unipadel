@@ -74,18 +74,13 @@ class RealizarReservaController extends BaseController {
 
 			if($disponibilidad=='disponible'){
 				$disponibilidad='ocupado';
-				$reserva->setDisponibilidad('ocupado');
-                                var_dump($reserva);die;
-				$this->RealizarReservaMapper->insertarReserva($reserva);
-                                var_dump($reserva);die;
-				$this->view->setFlash("Operación realizada");
+				$reserva->setDisponibilidad('ocupado');                               
+				$this->RealizarReservaMapper->insertarReserva($reserva);                               				
 				$this->GestionarReservasMapper->updateHorario($disponibilidad,$pista,$hora,$fecha);
 			}else{
 				$disponibilidad='disponible';
 				$reserva->setDisponibilidad('disponible');
-				$this->RealizarReservaMapper->cancelarReserva($reserva);
-                                var_dump($reserva);die;
-				$this->view->setFlash("Operación realizada");
+				$this->RealizarReservaMapper->cancelarReserva($reserva);                                			
 				$this->GestionarReservasMapper->updateHorario($disponibilidad,$pista,$hora,$fecha);
 			}
 
