@@ -53,17 +53,19 @@ class CategoriaMapper {
         $stmt = $this->db->prepare("SELECT CategoriaidCategoria FROM Campeonato_Categoria WHERE  CampeonatoidCampeonato = $idCampeonato");
         $stmt->execute();
         $idCategorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        $categoria = NULL;
+        
         foreach ($idCategorias as $idCategoria) {
 
             $stmt = $this->db->prepare("SELECT * FROM Categoria WHERE idCategoria = $idCategoria[CategoriaidCategoria] AND nivel = $nivel AND tipo = '$tipo' ");
             $stmt->execute();
             $categoria_aux = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($categoria_aux == !false) {
+            
+            if ($categoria_aux != false) {
                 $categoria = $categoria_aux;
             }
-        }
+        }        
+
         return $categoria;
     }
 
